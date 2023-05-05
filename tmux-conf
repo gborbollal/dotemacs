@@ -1,0 +1,6 @@
+set -s escape-time 1
+set -g base-index 1
+set -g pane-base-index 1
+bind -n 'M-}' next-window
+bind -n 'M-{' previous-window
+

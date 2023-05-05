@@ -1,0 +1,67 @@
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-save-default nil)
+ '(global-auto-revert-mode t)
+ '(help-window-select t)
+ '(make-backup-files nil)
+ '(neo-show-hidden-files t)
+ '(package-selected-packages
+	 '(protobuf-mode backward-forward helm-fuzzy-find helm-ag helm-projectile projectile use-package go-mode json-mode neotree yaml-mode helm-lsp helm flycheck lsp-ui dap-mode company))
+ '(savehist-mode t)
+ '(tab-width 2)
+ '(visible-bell t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(require 'helm)
+(helm-mode 1)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+
+(add-hook 'after-init-hook 'global-company-mode)
+(load "~/.emacs.d/editor.el")
+(load-theme 'manoj-dark)
+
+(global-set-key (kbd "C-d") 'duplicate-current-line-or-region)
+(global-set-key (kbd "C-q") 'kill-current-buffer)
+(global-set-key (kbd "M-1") 'neotree-toggle)
+(global-set-key (kbd "M-f") 'scroll-down)
+(global-set-key (kbd "M-v") 'scroll-up)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-o") 'helm-projectile)
+(global-set-key (kbd "C-b") 'godef-jump)
+(global-set-key (kbd "M-f") 'forward-word)
+(global-set-key (kbd "C-b") 'godef-jump)
+(global-set-key (kbd "M-`") 'switch-to-buffer)
+
+;; fix iTerm2 bugs. Use the quoted-insert function (C-q) to get the character sequence
+;; Add the sequences to the standard emacs keymap for escape sequences
+(define-key esc-map [?\[ ?1]
+	(let ((arrow-map (make-sparse-keymap)))
+;;		(define-key arrow-map [?\; ?9 ?D] 'backward-word)
+;;		(define-key arrow-map [?\; ?9 ?C] 'forward-word)
+		(define-key arrow-map [?\; ?1 ?0 ?C] 'other-window)
+		(define-key arrow-map [?\; ?1 ?0 ?D] #'(lambda () (interactive) (other-window -1)))
+		arrow-map))
+
+(add-hook 'go-mode-hook 'lsp-deferred)
+(dolist (hook '(go-mode-hook elisp-mode-hook yaml-mode-hook))
+	(add-hook hook 'backward-forward-mode)
+	(add-hook hook 'display-line-numbers-mode))
+
+(require 'dap-dlv-go)
+
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
