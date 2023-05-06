@@ -11,18 +11,24 @@
  '(global-auto-revert-mode t)
  '(help-window-select t)
  '(make-backup-files nil)
+ '(neo-confirm-create-file 'off-p)
+ '(neo-confirm-delete-directory-recursively 'off-p)
+ '(neo-confirm-kill-buffers-for-files-in-directory 'off-p)
  '(neo-show-hidden-files t)
  '(package-selected-packages
-	 '(protobuf-mode backward-forward helm-fuzzy-find helm-ag helm-projectile projectile use-package go-mode json-mode neotree yaml-mode helm-lsp helm flycheck lsp-ui dap-mode company))
+	 '(xclip protobuf-mode backward-forward helm-fuzzy-find helm-ag helm-projectile projectile use-package go-mode json-mode neotree yaml-mode helm-lsp helm flycheck lsp-ui dap-mode company))
  '(savehist-mode t)
  '(tab-width 2)
- '(visible-bell t))
+ '(visible-bell t)
+ '(xclip-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(setq auto-save-default nil)
 
 (require 'helm)
 (helm-mode 1)
